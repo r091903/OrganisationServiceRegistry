@@ -197,7 +197,7 @@ var nodemasterSchema=new mongoose.Schema({
   }
 
 });
-var edgemasterSchema=new mongoose.Schema({
+var edgemasterSchema = new mongoose.Schema({
   edgemaster:
   {
     essential: {
@@ -206,7 +206,7 @@ var edgemasterSchema=new mongoose.Schema({
         displayName: String,
         id: String,
         type: String
-      },
+      } ,
       modesToSelectTheServices: {
         mode:{
           mandatory: Boolean,
@@ -533,9 +533,9 @@ var edgemaster=mongoose.model('edgemaster',edgemasterSchema,'edgemaster');
 var service={};
 
 
-service.getNodeMaster=function (callback) {
-  return nodemaster.find({},callback);
-}
+// service.getNodeMaster=function (callback) {
+//   return nodemaster.find({},callback);
+// }
 service.getEdgeMaster=function (callback) {
   return edgemaster.find({},callback);
 }
