@@ -1,7 +1,7 @@
 // console.log("in users js ");
 var express = require('express');
 var router = express.Router();
-var service=require('./databb');
+//var service=require('./databb');
 
 
 
