@@ -1,0 +1,9 @@
+{
+    "essential": {
+        "noDependencyData": {
+            "location": {
+                "mandatory": true
+            }
+        }
+    }
+}

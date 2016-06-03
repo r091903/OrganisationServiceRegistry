@@ -1,25 +1,23 @@
 var express = require('express');
 var router = express.Router();
-var service=require('./master');
-/* GET home page. */
-router.get('/', function(req, res) {
-  //res.render('index', { title: 'Express' });
-  service.getNodeMaster(function(err,data){
-    if(err) console.log(err);
-    console.log(data);
-    //console.log("title-------------");
+var nodeMaster = require('../models/nodeMaster.model');
 
-     res.json({msg:data});
-  });
-});
-router.get('/edge', function(req, res) {
+// router.get('/', function(req, res) {
+//   //res.render('index', { title: 'Express' });
+//   edgemaster.getNodeMaster(function(err,data){
+//     if(err) console.log(err);
+//     console.log(data);
+//     //console.log("title-------------");
+//      res.json({msg:data});
+//   });
+// });
+
+router.get('/node', function(req, res) {
   //res.render('index', { title: 'Express' });
-  service.getEdgeMaster(function(err,data){
+  nodeMaster.getNodeMaster(function(err,data){
     if(err) console.log(err);
-    // console.log(data);
-    var msg = data;
-    console.log(msg);
-    res.json(msg);
+    console.log(data)
+    res.json(data);
   });
 });
 

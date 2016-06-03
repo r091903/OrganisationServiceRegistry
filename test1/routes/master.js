@@ -1,8 +1,10 @@
-var mongoose=require('mongoose');
-// var locations=new mongoose.Schema({
-//
-// });
-var nodemasterSchema=new mongoose.Schema({
+// TODO: Shouldn't be in routes folder. 
+// All the models should be in models folder
+// use SRP one model in one file
+
+var mongoose = require('mongoose');
+
+var nodemasterSchema = new mongoose.Schema({
   nodemaster:
   {
     essential: {
@@ -245,7 +247,7 @@ var edgemasterSchema = new mongoose.Schema({
               displayName: String,
               id: String,
               type: String,
-              data: {min: Number, min: Number }
+              data: {min: Number, max: Number }
             },
             departureTime: {
               mandatory: Boolean,
@@ -267,16 +269,16 @@ var edgemasterSchema = new mongoose.Schema({
 });
 
 // var nodesEdges=mongoose.model('orgData',masterSchema,'orgData');
-var nodemaster=mongoose.model('nodemaster',nodemasterSchema,'nodemaster');
-var edgemaster=mongoose.model('edgemaster',edgemasterSchema,'edgemaster');
-var service={};
 
-
-service.getNodeMaster=function (callback) {
-  return nodemaster.find({},callback);
+nodemasterSchema.statics.getNodeMaster = function (callback) {
+  return this.find({},callback);
 }
-service.getEdgeMaster=function (callback) {
-  return edgemaster.find({},callback);
+edgemasterSchema.statics.getEdgeMaster = function (callback) {
+  return this.find({},callback);
 }
 
-module.exports=service;
+var nodemaster = mongoose.model('nodemaster',nodemasterSchema,'nodemaster');
+var edgemaster = mongoose.model('edgemaster',edgemasterSchema,'edgemaster');
+
+
+module.exports = edgemaster;
