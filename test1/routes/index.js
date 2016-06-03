@@ -12,12 +12,17 @@ var nodeMaster = require('../models/nodeMaster.model');
 //   });
 // });
 
+router.get('/', function(req, res) {
+  res.render('index', { title: 'Express' });
+});
+
+
 router.get('/node', function(req, res) {
   //res.render('index', { title: 'Express' });
   nodeMaster.getNodeMaster(function(err,data){
     if(err) console.log(err);
     console.log(data)
-    res.json(data);
+    res.json({msg:data});
   });
 });
 

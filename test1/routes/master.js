@@ -1,4 +1,4 @@
-// TODO: Shouldn't be in routes folder. 
+// TODO: Shouldn't be in routes folder.
 // All the models should be in models folder
 // use SRP one model in one file
 
