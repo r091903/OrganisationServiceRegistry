@@ -13,7 +13,7 @@ var nodemasterSchema = new mongoose.Schema({
           mandatory: Boolean,
           displayName: String,
           id: String,
-          type: String,
+          input_type: String,
           data: String
         }
       },
@@ -22,7 +22,7 @@ var nodemasterSchema = new mongoose.Schema({
           mandatory: Boolean,
           displayName: String,
           id: String,
-          type: String,
+          input_type: String,
           specificAttr:{
             domainList:[
               {
@@ -48,46 +48,46 @@ var nodemasterSchema = new mongoose.Schema({
           mandatory: Boolean,
           displayName: String,
           id: String,
-          type: String,
+          input_type: String,
           dataReference: String
         },
         area: {
           mandatory: Boolean,
           displayName: String,
           id: String,
-          type: String,
+          input_type: String,
           data: String
         },
         checkindate:{
           mandatory: Boolean,
           displayName: String,
           id: String,
-          type: String
+          input_type: String
         },
         checkoutdate:{
           mandatory: Boolean,
           displayName: String,
           id: String,
-          type: String
+          input_type: String
         },
         checkinTime:{
           mandatory: Boolean,
           displayName: String,
           id: String,
-          type: String
+          input_type: String
         },
         checkoutTime:{
           mandatory: Boolean,
           displayName: String,
           id: String,
-          type: String
+          input_type: String
         }
         ,
         preferences:{
           mandatory: Boolean,
           displayName: String,
           id: String,
-          type: String,
+          input_type: String,
           specificAttr:{
             domainList:[String]
           }
@@ -97,7 +97,7 @@ var nodemasterSchema = new mongoose.Schema({
           mandatory: Boolean,
           displayName: String,
           id: String,
-          type: String,
+          input_type: String,
           specificAttr:{
             domainList:[String]
           }
@@ -106,19 +106,19 @@ var nodemasterSchema = new mongoose.Schema({
           mandatory: Boolean,
           displayName: String,
           id: String,
-          type: String,
+          input_type: String,
           specificAttr:{
             min:Number,
             max:Number
           }
         }
         ,
-        typeOfProperty:
+        input_typeOfProperty:
         {
           mandatory: Boolean,
           displayName: String,
           id: String,
-          type: String,
+          input_type: String,
           specificAttr:{
             domainList:[String]
           }
@@ -128,7 +128,7 @@ var nodemasterSchema = new mongoose.Schema({
           mandatory: Boolean,
           displayName: String,
           id: String,
-          type: String,
+          input_type: String,
           specificAttr:{
             domainList:[String]
           }
@@ -137,7 +137,7 @@ var nodemasterSchema = new mongoose.Schema({
           mandatory: Boolean,
           displayName: String,
           id: String,
-          type: String,
+          input_type: String,
           specificAttr:{
             domainList:[String]
           }
@@ -146,7 +146,7 @@ var nodemasterSchema = new mongoose.Schema({
           mandatory: Boolean,
           displayName: String,
           id: String,
-          type: String,
+          input_type: String,
           specificAttr:{
             domainList:[String]
           }
@@ -160,7 +160,7 @@ var nodemasterSchema = new mongoose.Schema({
           mandatory: Boolean,
           displayName: String,
           id: String,
-          type: String,
+          input_type: String,
           data: [String]
         },
 
@@ -168,14 +168,14 @@ var nodemasterSchema = new mongoose.Schema({
           mandatory: Boolean,
           displayName: String,
           id: String,
-          type: String,
+          input_type: String,
           data: [String]
         },
-        typeOfLocalTransport: {
+        input_typeOfLocalTransport: {
           mandatory: Boolean,
           displayName: String,
           id: String,
-          type: String,
+          input_type: String,
           specificAttr:{
             domainList:[String]
           }
@@ -185,13 +185,13 @@ var nodemasterSchema = new mongoose.Schema({
           mandatory: Boolean,
           displayName: String,
           id: String,
-          type: String
+          input_type: String
         },
         pickupTime: {
           mandatory: Boolean,
           displayName: String,
           id: String,
-          type: String
+          input_type: String
         }
       }
 
@@ -202,26 +202,27 @@ var nodemasterSchema = new mongoose.Schema({
 var edgemasterSchema = new mongoose.Schema({
   edgemaster:
   {
+    organisation:String
     essential: {
       travelStartDate: {
         mandatory: Boolean,
         displayName: String,
         id: String,
-        type: String
+        input_type: String
       } ,
       modesToSelectTheServices: {
         mode:{
           mandatory: Boolean,
           displayName: String,
           id: String,
-          type: String,
+          input_type: String,
           data: [String]
         },
         extraAddOnsServices: {
           mandatory: Boolean,
           displayName: String,
           id: String,
-          type: String,
+          input_type: String,
           data: [String]
         }
       }
@@ -232,34 +233,34 @@ var edgemasterSchema = new mongoose.Schema({
               mandatory: Boolean,
               displayName: String,
               id: String,
-              type: String,
+              input_type: String,
               dataReference: String
             },
             class:{
               mandatory:Boolean,
               displayName: String,
               id: String,
-              type: String,
+              input_type: String,
               data: [String]
             },
             numberOfHops: {
               mandatory: Boolean,
               displayName: String,
               id: String,
-              type: String,
+              input_type: String,
               data: {min: Number, max: Number }
             },
             departureTime: {
               mandatory: Boolean,
               displayName: String,
               id: String,
-              type: String
+              input_type: String
             },
             airlines: {
               mandatory: Boolean,
               displayName: String,
               id: String,
-              type: String,
+              input_type: String,
               data: [String]
             }
       }

@@ -7,8 +7,9 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var url="mongodb://localhost/myDatabase";
 mongoose.connect(url);
-//var som=mongoose.connection;
+
 var routes = require('./routes/index');
+
 var users = require('./routes/users');
 // var helloworld=require('./routes/helloworld');
 var app = express();
@@ -28,6 +29,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// app.use('/', routes);
 app.use('/', routes);
 app.use('/users',users);
 //app.use('/helloworld',helloworld);
