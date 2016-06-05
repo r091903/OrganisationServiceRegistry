@@ -69,4 +69,9 @@ var edgeMasterSchema=new mongoose.Schema({
 edgeMasterSchema.statics.getEdgeMaster = function(cb) {
     this.find({},cb);
 }
+edgeMasterSchema.statics.getEdgeMasterFor = function(orgName,cb) {
+    this.findOne({organisation:orgName},cb);
+}
+
+
 module.exports = mongoose.model('edgeMaster',edgeMasterSchema,'edgemaster');

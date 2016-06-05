@@ -199,4 +199,9 @@ var nodeMasterSchema = new mongoose.Schema({
 nodeMasterSchema.statics.getNodeMaster = function(cb) {
     this.find({},cb);
 }
+nodeMasterSchema.statics.getNodeMasterFor = function(orgName,cb) {
+    this.findOne({organisation:orgName},cb);
+}
+
+
 module.exports = mongoose.model('nodeMaster',nodeMasterSchema,'nodemaster');
