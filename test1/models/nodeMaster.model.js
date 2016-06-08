@@ -1,206 +1,243 @@
 const mongoose = require('mongoose');
-var nodeMasterSchema = new mongoose.Schema({
-  organisation:String,
-  essential:
+var nodeMasterSchema = new mongoose.Schema(
+
   {
-    noDependencyData:{
-      location: {
-        mandatory: Boolean,
-        displayName: String,
-        id: String,
-        inputType: String,
-        data: String
-      }
-    }
+  	orgId:String,
+  	language:String,
+  	nodemaster:
+  	{
+  	servicesDetails:
+  	{
+  		stay:{
+  			icons: String,
+  			displayName: String
+  		},
+  		localTravel:{
+  			icons:String,
+  			displayName: String
+  		}
+  	},
+  	essential: {
+  		noDependencyData: {
+  			location: {
+  				mandatory: Boolean,
+  				displayName: String,
+  				id: String,
+  				inputType: String,
+  				specificAttr: {
+  					url:String
+  				}
+  			}
+  		},
+  		modesToSelectTheServices: {
+  			basicServices: {
+  				mandatory: Boolean,
+  				displayName: String,
+  				id: String,
+  				inputType: String,
+  				specificAttr: {
+  					domainList: {
+  						stay: String,
+  						localTravel: String
+  					}
+  				}
 
-    ,
-    modesToSelectTheServices: {
-      basicServices:{
-        mandatory: Boolean,
-        displayName: String,
-        id: String,
-        inputType: String,
-        specificAttr:{
-          domainList:[
-            {
-              serviceId:String, serviceDisplayName: String
-            },
-            {
-              serviceId:String, serviceDisplayName: String
-            }
-          ]
-        },
-        listLabelKey: String,
-        listLabelValue: String
-      }
-    }
+  			}
+  		}
+  	},
+  	servicesIntializer:{
+  		stay: [
+  							{
+  									state: String,
+  									requested: {String}
+  							}
+  						],
+  		localTravel: [{
+
+  					state: String,
+  					requested: {String}
+  			}]
+  	}
+  	,
+  	services: {
+  		stay: {
+  			location: {
+  				mandatory: Boolean,
+  				displayName: String,
+  				id: String,
+  				inputType: String,
+  				specificAttr: {
+  					url:String
+  				}
+  			},
+  			area: {
+  				mandatory: Boolean,
+  				displayName: String,
+  				id: String,
+  				inputType: String,
+  				specificAttr: {
+  					url:String
+  				}
+  			},
+  			checkinDate: {
+  				mandatory: Boolean,
+  				displayName: String,
+  				id: String,
+  				inputType: String
+  			},
+  			checkinDate: {
+  				mandatory: Boolean,
+  				displayName: String,
+  				id: String,
+  				inputType: String
+  			},
+  			checkinTime: {
+  				mandatory: Boolean,
+  				displayName: String,
+  				id: String,
+  				inputType: String
+  			},
+  			checkoutTime: {
+  				mandatory: Boolean,
+  				displayName: String,
+  				id: String,
+  				inputType: String
+  			},
+  			preferences: {
+  				mandatory: Boolean,
+  				displayName: String,
+  				id: String,
+  				inputType: String,
+  				specificAttr: {
+  					domainList: {ac:String ,nonAc:String}
+  				}
+  			},
+  			rating: {
+  				mandatory: Boolean,
+  				displayName: String,
+  				id: String,
+  				inputType: String,
+  				specificAttr: {
+  					domainList: {oneStar:String, twoStar:String, threeStar:String, fourStar:String}
+  				}
+  			},
+  			typeOfProperty: {
+  				mandatory: Boolean,
+  				displayName: String,
+  				id: String,
+  				inputType: String,
+  				specificAttr: {
+  					domainList: {guestHouse:String, hotels:String}
+  				}
+  			},
+  			nearBy: {
+  				mandatory: Boolean,
+  				displayName: String,
+  				id: String,
+  				inputType: String,
+  				specificAttr: {
+  					floor:Number,
+  					ceil: Number,
+  					step: Number,
+  					noSwitching: Boolean,
+  					endPointsTranslate: {
+  						prefix: String,
+  						postfix: String
+  					},
+  					sliderHandleTranslate: {
+  						prefix: String,
+  						postfix: String
+  					}
+  				}
+  			},
+
+  			stars: {
+  				mandatory: Boolean,
+  				displayName: String,
+  				id: String,
+  				inputType: String,
+  				specificAttr: {
+  					domainList: {oneStar:String, twoStar:String, threeStar:String, fourStar:String}
+  				}
+  			},
+  			amenities: {
+  				mandatory: Boolean,
+  				displayName: String,
+  				id: String,
+  				inputType: String,
+  				specificAttr: {
+  					domainList: {meetingRooms:String, swimmingPools:String, fitness:String, restaurants:String}
+  				}
+  			},
+  			proximity: {
+  				mandatory: Boolean,
+  				displayName: String,
+  				id: String,
+  				inputType: String,
+  				specificAttr: {
+  					domainList: {metroStation:String, taxiStands:String, airports:String, railwayStations:String}
+  				}
+
+  			}
+
+  		},
+  		localTravel: {
+  			pickupPoint: {
+  				mandatory: Boolean,
+  				displayName: String,
+  				id: String,
+  				inputType: String,
+  				specificAttr: {
+  					url:String
+  				}
+  			},
+
+  			dropPoint: {
+  				mandatory: Boolean,
+  				displayName: String,
+  				id: String,
+  				inputType: String,
+  				specificAttr: {
+  					url:String
+  				}
+  			},
+  			typeOfLocalTransport: {
+  				mandatory: Boolean,
+  				id: String,
+  				displayName: String,
+  				inputType: String,
+  				specificAttr: {
+  					domainList: {cab:String, bus:String}
+  				}
+  			},
+
+  			pickupDate: {
+  				mandatory: Boolean,
+  				displayName: String,
+  				id: String,
+  				inputType: String
+  			},
+  			pickupTime: {
+  				mandatory: Boolean,
+  				displayName: String,
+  				id: String,
+  				inputType: String
+  			}
+  		}
+  	}
   }
-  ,
-  servicesName:
-  {
-    stay: String,
-    localTravel: String
   }
-  ,
-  services:
-  {
-    stay: {
-      location:{
-        mandatory: Boolean,
-        displayName: String,
-        id: String,
-        inputType: String,
-        dataReference: String
-      },
-      area: {
-        mandatory: Boolean,
-        displayName: String,
-        id: String,
-        inputType: String,
-        data: String
-      },
-      checkindate:{
-        mandatory: Boolean,
-        displayName: String,
-        id: String,
-        inputType: String
-      },
-      checkoutdate:{
-        mandatory: Boolean,
-        displayName: String,
-        id: String,
-        inputType: String
-      },
-      checkinTime:{
-        mandatory: Boolean,
-        displayName: String,
-        id: String,
-        inputType: String
-      },
-      checkoutTime:{
-        mandatory: Boolean,
-        displayName: String,
-        id: String,
-        inputType: String
-      }
-      ,
-      preferences:{
-        mandatory: Boolean,
-        displayName: String,
-        id: String,
-        inputType: String,
-        specificAttr:{
-          domainList:[String]
-        }
-      },
-      rating:
-      {
-        mandatory: Boolean,
-        displayName: String,
-        id: String,
-        inputType: String,
-        specificAttr:{
-          domainList:[String]
-        }
-      },
-      nearBy : {
-        mandatory: Boolean,
-        displayName: String,
-        id: String,
-        inputType: String,
-        specificAttr:{
-          min:Number,
-          max:Number
-        }
-      }
-      ,
-      inputTypeOfProperty:
-      {
-        mandatory: Boolean,
-        displayName: String,
-        id: String,
-        inputType: String,
-        specificAttr:{
-          domainList:[String]
-        }
-      },
-      stars:
-      {
-        mandatory: Boolean,
-        displayName: String,
-        id: String,
-        inputType: String,
-        specificAttr:{
-          domainList:[String]
-        }
-      },
-      amenities:{
-        mandatory: Boolean,
-        displayName: String,
-        id: String,
-        inputType: String,
-        specificAttr:{
-          domainList:[String]
-        }
-      },
-      proximity: {
-        mandatory: Boolean,
-        displayName: String,
-        id: String,
-        inputType: String,
-        specificAttr:{
-          domainList:[String]
-        }
 
-      }
 
-    }
-    ,
-    localTravel: {
-      pickupPoint: {
-        mandatory: Boolean,
-        displayName: String,
-        id: String,
-        inputType: String,
-        data: [String]
-      },
-
-      dropPoint: {
-        mandatory: Boolean,
-        displayName: String,
-        id: String,
-        inputType: String,
-        data: [String]
-      },
-      inputTypeOfLocalTransport: {
-        mandatory: Boolean,
-        displayName: String,
-        id: String,
-        inputType: String,
-        specificAttr:{
-          domainList:[String]
-        }
-      },
-      pickupDate: {
-        mandatory: Boolean,
-        displayName: String,
-        id: String,
-        inputType: String
-      },
-      pickupTime: {
-        mandatory: Boolean,
-        displayName: String,
-        id: String,
-        inputType: String
-      }
-    }
-  }
-});
+);
 nodeMasterSchema.statics.getNodeMaster = function(cb) {
     this.find({},cb);
 }
-nodeMasterSchema.statics.getNodeMasterFor = function(orgName,cb) {
-    this.findOne({organisation:orgName},cb);
+nodeMasterSchema.statics.getNodeMasterFor = function(orgId,lang,cb) {
+    this.findOne({orgId:orgId,language:lang},cb);
+}
+nodeMasterSchema.statics.getNodeMasterService = function(orgId,lang,cb) {
+    this.findOne({orgId:orgId,language:lang},cb);
 }
 
 

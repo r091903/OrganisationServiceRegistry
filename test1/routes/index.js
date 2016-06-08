@@ -23,21 +23,69 @@ router.get('/edge', function(req, res) {
   });
 });
 
-router.post('/nodefor', function(req, res) {
+router.get('/node/:orgId/:language', function(req, res) {
   //res.render('index', { title: 'Express' });
-  var orgName=req.body.organisationName;
-  console.log("name : "+orgName);
-  nodeMaster.getNodeMasterFor(orgName,function(err,data) {
-    console.log(data);
-    res.json(data);
+  var orgId=req.params.orgId;
+  var language=req.params.language;
+  console.log("org id : "+orgId);
+  nodeMaster.getNodeMasterFor(orgId,language,function(err,data) {
+    // console.log(data);
+    res.json(data.nodemaster);
   });
 });
-router.post('/edgefor', function(req, res) {
+router.get('/edge/:orgId/:language', function(req, res) {
   //res.render('index', { title: 'Express' });
-  var orgName=req.body.organisationName;
-  edgeMaster.getEdgeMasterFor(orgName,function(err,data) {
-    console.log(data);
-    res.json(data);
+  var orgId=req.params.orgId;
+  var language=req.params.language;
+  edgeMaster.getEdgeMasterFor(orgId,language,function(err,data) {
+    // console.log(data);
+    res.json(data.edgemaster);
+  });
+});
+
+router.get('/node/:orgId/:language/service/:serviceId',function (req,res) {
+  var orgId=req.params.orgId;
+  var language=req.params.language;
+  var serviceId=req.params.serviceId;
+  nodeMaster.getNodeMasterService(orgId,language,function (err,data) {
+    if(data===null){
+      res.send("No details found for organisation id");
+    }
+    else{
+      service={};
+      if(data.nodemaster.servicesDetails[serviceId]===undefined){
+        res.send("service id not found");
+      }
+      else{
+        service.serviceDisplayName=data.nodemaster.servicesDetails[serviceId].displayName;
+        service.serviceObject=data.nodemaster.services[serviceId];
+        res.json(service);
+      }
+    }
+  });
+});
+
+
+router.get('/edge/:orgId/:language/service/:serviceId',function (req,res) {
+  var orgId=req.params.orgId;
+  var language=req.params.language;
+  var serviceId=req.params.serviceId;
+  edgeMaster.getEdgeMasterService(orgId,language,function (err,data) {
+    if(data===null){
+      res.send("No details found for organisation id");
+    }
+    else{
+      service={};
+      if(data.edgemaster.servicesDetails[serviceId]===undefined){
+        res.send("service id not found");
+      }
+      else{
+        service.serviceDisplayName=data.edgemaster.servicesDetails[serviceId].displayName;
+        service.serviceObject=data.edgemaster.services[serviceId];
+        res.json(service);
+      }
+
+    }
   });
 });
 
