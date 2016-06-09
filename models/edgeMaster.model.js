@@ -8,20 +8,37 @@ var edgeMasterSchema=new mongoose.Schema(
     {
       servicesDetails:
       {
-        flight:{
-          icons: String,
-          displayName: String
+        coExistServices: {
+          visaonarrival:{
+            icons: String,
+            displayName: String
+          },
+          forex:{
+            icons:String,
+            displayName: String
+            }
         },
-        train:{
-          icons:String,
-          displayName: String
-        },
-        bus: {
-          icons:String,
-          displayName:String
+        mutuallyExclusive: {
+          mode:{
+            displayName:String,
+            servicesDetails: {
+              flight: {
+                icons: String,
+                displayName: String
+              },
+              train: {
+                icons:String,
+                displayName:String
+              },
+              bus:{
+                icons:String,
+                displayName:String
+              }
+            }
+          }
         }
       },
-    essential: {
+      essential: {
       noDependencyData: {
         travelStartDate: {
           mandatory: Boolean,
