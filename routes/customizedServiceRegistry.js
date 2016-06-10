@@ -2,24 +2,48 @@ var express = require('express');
 var router = express.Router();
 var request = require('request');
 var _ = require('underscore');
-var nodemasterJson;
+var nodeMasterJson;
 var ruleBookJson;
 var exclusionJson={};
 var edgeMasterJson;
+var nodeMaster = require('../models/nodeMaster.model');
+var edgeMaster = require('../models/edgeMaster.model');
 
-request('http://orgRegistry/node', function (error, response, body) {
-  if (!error && response.statusCode == 200) {
-  //  console.log(body) // Show the HTML for the Google homepage.
-    nodeMasterJson=response.data;
-  }
-})
+router.get('/', function(req, res) {
 
-request('http://orgRegistry/edge', function (error, response, body) {
-  if (!error && response.statusCode == 200) {
-  //  console.log(body) // Show the HTML for the Google homepage.
-    edgeMasterJson=response.data;
+  nodeMaster.getNodeMaster(function(err,data) {
+    console.log(data);
+    nodeMasterJson=data;
+  //  res.json(data);
+  });
+  edgeMaster.getEdgeMaster(function(err,data) {
+    console.log(data);
+    edgeMasterJson=data;
+    // res.json(data);
+  });
+
+  var customizedData={
+    "customizedNodeMaster":nodeMasterJson,
+    "customizedEdgeMaster":edgeMasterJson,
+    "exclusionJson":exclusionJson
   }
-})
+  res.json(customizedData);
+});
+
+
+// request('http://orgRegistry/node', function (error, response, body) {
+//   if (!error && response.statusCode == 200) {
+//   //  console.log(body) // Show the HTML for the Google homepage.
+//     nodeMasterJson=response.data;
+//   }
+// })
+
+// request('http://orgRegistry/edge', function (error, response, body) {
+//   if (!error && response.statusCode == 200) {
+//   //  console.log(body) // Show the HTML for the Google homepage.
+//     edgeMasterJson=response.data;
+//   }
+// })
 
 
 request('http://Rules', function (error, response, body) {
@@ -31,7 +55,7 @@ request('http://Rules', function (error, response, body) {
 
 
 
-//reading or iterating original nodemasterJson and then checking in rule book if there exists some rule for each service in iteration  if it exists then they are passes to respective interpreter for interpretion
+//reading or iterating original nodeMasterJson and then checking in rule book if there exists some rule for each service in iteration  if it exists then they are passes to respective interpreter for interpretion
 for(services in  nodeMasterJson.services )
 {
   var ruleChecker=ifRuleExists(services);
@@ -237,13 +261,5 @@ function getValueFromdynamicKey(obj,keyString) {
   return obj[hierarchyWiseKeysArray.shift()];
 }
 
-router.get('/', function(req, res) {
-  var customizedData={
-    "customizedNodeMaster":nodeMasterJson,
-    "customizedEdgeMaster":edgeMasterJson,
-    "exclusionJson":exclusionJson
-  }
-  res.json(customizedData);
-});
 
 module.exports = router;
