@@ -3,34 +3,112 @@ var router = express.Router();
 var request = require('request');
 var _ = require('underscore');
 var nodeMasterJson;
-var ruleBookJson;
+var ruleBookJson={};
 var exclusionJson={};
-var edgeMasterJson;
+var edgeMasterJson={};
 var user;
 var nodeMaster = require('../models/nodeMaster.model');
 var edgeMaster = require('../models/edgeMaster.model');
+var fs=require('fs');
 
 router.get('/', function(req, res) {
-
+  console.log("im in customizedServiceRegistry");
 
   user=req.user;
-  nodeMaster.getNodeMaster(function(err,data) {
-    console.log(data);
-    nodeMasterJson=data;
-  //  res.json(data);
+  nodeMaster.getNodeMasterFor('wipro','en',function(err,data) {
+    // console.log(data.nodemaster.services);
+
+    nodeMasterJson=data.nodemaster.services;
+    fs.writeFile("masterJson.json", JSON.stringify(nodeMasterJson, null, 4), function (err) {
+     if (err) {
+       console.log(err);
+     } else {
+       console.log("JSON saved to " + "outputFilename1");
+     }
+
+    });
+
+    //reading or iterating original nodeMasterJson and then checking in rule book if there exists some rule for each service in iteration  if it exists then they are passes to respective interpreter for interpretion
+    for(services in  nodeMasterJson.services )
+    {
+      var ruleChecker=ifRuleExists(services);
+      if(ruleChecker.exists)
+      {
+        console.log("rules are");
+        console.log(ruleChecker.rule);
+        console.log(JSON.stringify(ruleChecker.rule) );
+        ruleInterpreter(ruleChecker.rule,nodeMasterJson);
+
+      }
+    }
+    for(key in nodeMasterJson.essential)
+    {
+        for(service in nodeMasterJson.essential[key])
+      {
+        var ruleChecker=ifRuleExists(service);
+        if(ruleChecker.exists)
+        {
+          console.log("rules are");
+          console.log(ruleChecker.rule);
+          console.log(JSON.stringify(ruleChecker.rule) );
+          ruleInterpreter(ruleChecker.rule,masterJson);
+        }
+
+      }
+    }
+
+  // res.json(data);
   });
-  edgeMaster.getEdgeMaster(function(err,data) {
-    console.log(data);
-    edgeMasterJson=data;
-    // res.json(data);
+  edgeMaster.getEdgeMasterFor('wipro','en',function(err,data) {
+    // console.log(data);
+    edgeMasterJson=data.edgemaster;
+
+    //reading or iterating original edgmasterJson and then checking in rule book if there exists some rule for each service in iteration  if it exists then they are passes to respective interpreter for interpretion
+
+
+    for(services in edgeMasterJson.services)
+    {
+      var ruleChecker=ifRuleExists(services);
+      if(ruleChecker.exists)
+      {
+        console.log("rules are");
+        console.log(ruleChecker.rule);
+        console.log(JSON.stringify(ruleChecker.rule) );
+        ruleInterpreter(ruleChecker.rule,edgeMasterJson);
+
+      }
+
+
+    }
+    for(key in edgeMasterJson.essential)
+    {
+        for(service in edgeMasterJson.essential[key])
+      {
+        var ruleChecker=ifRuleExists(service);
+        if(ruleChecker.exists)
+        {
+          console.log("rules are");
+          console.log(ruleChecker.rule);
+          console.log(JSON.stringify(ruleChecker.rule) );
+          ruleInterpreter(ruleChecker.rule,edgeMasterJson);
+        }
+
+      }
+    }
+    var customizedData={
+      "customizedNodeMaster":nodeMasterJson,
+      "customizedEdgeMaster":edgeMasterJson,
+      "exclusionJson":exclusionJson
+    }
+    res.json(customizedData);
+
+      // res.json(data);
   });
 
-  var customizedData={
-    "customizedNodeMaster":nodeMasterJson,
-    "customizedEdgeMaster":edgeMasterJson,
-    "exclusionJson":exclusionJson
-  }
-  res.json(customizedData);
+
+
+
+
 });
 
 
@@ -58,68 +136,6 @@ request('http://localhost:8060/rule', function (error, response, body) {
 
 
 
-//reading or iterating original nodeMasterJson and then checking in rule book if there exists some rule for each service in iteration  if it exists then they are passes to respective interpreter for interpretion
-for(services in  nodeMasterJson.services )
-{
-  var ruleChecker=ifRuleExists(services);
-  if(ruleChecker.exists)
-  {
-    console.log("rules are");
-    console.log(ruleChecker.rule);
-    console.log(JSON.stringify(ruleChecker.rule) );
-    ruleInterpreter(ruleChecker.rule,nodeMasterJson);
-
-  }
-}
-for(key in nodeMasterJson.essential)
-{
-    for(service in nodeMasterJson.essential[key])
-  {
-    var ruleChecker=ifRuleExists(service);
-    if(ruleChecker.exists)
-    {
-      console.log("rules are");
-      console.log(ruleChecker.rule);
-      console.log(JSON.stringify(ruleChecker.rule) );
-      ruleInterpreter(ruleChecker.rule,masterJson);
-    }
-
-  }
-}
-
-
-//reading or iterating original edgmasterJson and then checking in rule book if there exists some rule for each service in iteration  if it exists then they are passes to respective interpreter for interpretion
-
-
-for(services in edgeMasterJson.services)
-{
-  var ruleChecker=ifRuleExists(services);
-  if(ruleChecker.exists)
-  {
-    console.log("rules are");
-    console.log(ruleChecker.rule);
-    console.log(JSON.stringify(ruleChecker.rule) );
-    ruleInterpreter(ruleChecker.rule,edgeMasterJson);
-
-  }
-
-
-}
-for(key in edgeMasterJson.essential)
-{
-    for(service in edgeMasterJson.essential[key])
-  {
-    var ruleChecker=ifRuleExists(service);
-    if(ruleChecker.exists)
-    {
-      console.log("rules are");
-      console.log(ruleChecker.rule);
-      console.log(JSON.stringify(ruleChecker.rule) );
-      ruleInterpreter(ruleChecker.rule,edgeMasterJson);
-    }
-
-  }
-}
 
 //checking whether rule exists for particular service if yes then returning set of rules
 function ifRuleExists(service)
