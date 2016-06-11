@@ -6,11 +6,14 @@ var nodeMasterJson;
 var ruleBookJson;
 var exclusionJson={};
 var edgeMasterJson;
+var user;
 var nodeMaster = require('../models/nodeMaster.model');
 var edgeMaster = require('../models/edgeMaster.model');
 
 router.get('/', function(req, res) {
 
+
+  user=req.user;
   nodeMaster.getNodeMaster(function(err,data) {
     console.log(data);
     nodeMasterJson=data;
@@ -46,7 +49,7 @@ router.get('/', function(req, res) {
 // })
 
 
-request('http://Rules', function (error, response, body) {
+request('http://localhost:8060/rule', function (error, response, body) {
   if (!error && response.statusCode == 200) {
   //  console.log(body) // Show the HTML for the Google homepage.
   ruleBookJson=response.data;
