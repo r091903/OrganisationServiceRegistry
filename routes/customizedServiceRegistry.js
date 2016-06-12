@@ -14,8 +14,8 @@ var fs=require('fs');
 router.get('/', function(req, res) {
   console.log("im in customizedServiceRegistry");
 
-  user=req.user;
-  nodeMaster.getNodeMasterFor('wipro','en',function(err,data) {
+  user = req.user;
+  nodeMaster.getNodeMasterFor(user.organization,user.preferred,function(err,data) {
     // console.log(data.nodemaster.services);
 
     nodeMasterJson=data.nodemaster.services;
