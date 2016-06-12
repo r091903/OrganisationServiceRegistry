@@ -14,7 +14,13 @@ var fs=require('fs');
 router.get('/', function(req, res) {
   console.log("im in customizedServiceRegistry");
 
+<<<<<<< HEAD
   user = req.user;
+  nodeMaster.getNodeMasterFor(user.organization,user.preferred,function(err,data) {
+    // console.log(data.nodemaster.services);
+=======
+  user=req.user;
+>>>>>>> 743009264746194f06d1c0384aee94dcc608c8de
 
   request('http://localhost:8060/rule/band/'+user.band+'/exp'+user.work_experience_in_year, function (error, response, body) {
     if (!error && response.statusCode == 200) {
