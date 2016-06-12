@@ -15,18 +15,26 @@ router.get('/', function(req, res) {
   console.log("im in customizedServiceRegistry");
 
   user=req.user;
-  nodeMaster.getNodeMasterFor('wipro','en',function(err,data) {
+
+  request('http://localhost:8060/rule/band/'+user.band+'/exp'+user.work_experience_in_year, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+    //  console.log(body) // Show the HTML for the Google homepage.
+    ruleBookJson=response.data;
+    }
+  })
+
+  nodeMaster.getNodeMasterFor(user.organisation_name,user.prefered_language,function(err,data) {
     // console.log(data.nodemaster.services);
 
-    nodeMasterJson=data.nodemaster.services;
-    fs.writeFile("masterJson.json", JSON.stringify(nodeMasterJson, null, 4), function (err) {
-     if (err) {
-       console.log(err);
-     } else {
-       console.log("JSON saved to " + "outputFilename1");
-     }
-
-    });
+    nodeMasterJson=data.nodemaster;
+    // fs.writeFile("masterJson.json", JSON.stringify(nodeMasterJson, null, 4), function (err) {
+    //  if (err) {
+    //    console.log(err);
+    //  } else {
+    //    console.log("JSON saved to " + "outputFilename1");
+    //  }
+    //
+    // });
 
     //reading or iterating original nodeMasterJson and then checking in rule book if there exists some rule for each service in iteration  if it exists then they are passes to respective interpreter for interpretion
     for(services in  nodeMasterJson.services )
@@ -59,7 +67,7 @@ router.get('/', function(req, res) {
 
   // res.json(data);
   });
-  edgeMaster.getEdgeMasterFor('wipro','en',function(err,data) {
+  edgeMaster.getEdgeMasterFor(user.organisation_name,user.prefered_language,function(err,data) {
     // console.log(data);
     edgeMasterJson=data.edgemaster;
 
@@ -127,12 +135,7 @@ router.get('/', function(req, res) {
 // })
 
 
-request('http://localhost:8060/rule', function (error, response, body) {
-  if (!error && response.statusCode == 200) {
-  //  console.log(body) // Show the HTML for the Google homepage.
-  ruleBookJson=response.data;
-  }
-})
+
 
 
 
