@@ -5,19 +5,18 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var url="mongodb://localhost/myDatabase";
+var url = "mongodb://localhost/myDatabase";
 mongoose.connect(url);
 
 var routes = require('./routes/index');
 
+
+
 //var users = require('./routes/users');
 // var helloworld=require('./routes/helloworld');
 
- var customizedServiceRegistry=require('./routes/customizedServiceRegistry');
+var customizedServiceRegistry = require('./routes/customizedServiceRegistry.route');
 var app = express();
-
-
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -31,14 +30,19 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(function(req, res, next) {
+  req.user = JSON.parse(req.headers['user']);
+  next();
+});
+
 // app.use('/', routes);
 app.use('/', routes);
-app.use('/masters',customizedServiceRegistry);
+app.use('/masters', customizedServiceRegistry);
 
 // app.use('/customizedServiceRegistry',customizedServiceRegistry);
 //app.use('/helloworld',helloworld);
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
@@ -49,7 +53,7 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
+  app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
       message: err.message,
@@ -61,7 +65,7 @@ if (app.get('env') === 'development') {
 
 // production error handler
 // no stacktraces leaked to user
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {
     message: err.message,
