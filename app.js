@@ -39,7 +39,7 @@ app.use(function(req, res, next) {
 app.use('/', routes);
 app.use('/masters', customizedServiceRegistry);
 
-// app.use('/customizedServiceRegistry',customizedServiceRegistry);
+app.use('/customizedServiceRegistry',customizedServiceRegistry);
 //app.use('/helloworld',helloworld);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
