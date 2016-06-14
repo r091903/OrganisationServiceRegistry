@@ -57,7 +57,7 @@ router.get('/node/:orgId/:language/service/:serviceId',function (req,res) {
         res.send("service id not found");
       }
       else{
-        service.serviceDisplayName=data.nodemaster.servicesDetails[serviceId].displayName;
+        //service.serviceDisplayName=data.nodemaster.servicesDetails[serviceId].displayName;
         service.serviceObject=data.nodemaster.services[serviceId];
         res.json(service);
       }
@@ -76,11 +76,11 @@ router.get('/edge/:orgId/:language/service/:serviceId',function (req,res) {
     }
     else{
       service={};
-      if(data.edgemaster.servicesDetails[serviceId]===undefined){
+      if(data.edgemaster.services[serviceId]===undefined){
         res.send("service id not found");
       }
       else{
-        service.serviceDisplayName=data.edgemaster.servicesDetails[serviceId].displayName;
+        // service.serviceDisplayName=data.edgemaster.servicesDetails[serviceId].displayName;
         service.serviceObject=data.edgemaster.services[serviceId];
         res.json(service);
       }
